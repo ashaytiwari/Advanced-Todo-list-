@@ -20,10 +20,12 @@ function LoginPage() {
 
     const submitHandler = event => {
         let count = 0;
+        let index = 0;
         event.preventDefault();
         for (let i = 0; i < userInfo.length; i++) {
             if (userName === userInfo[i].userName && password === userInfo[i].password) {
                 count++;
+                index = i;
                 break;
             }
             else {
@@ -31,6 +33,10 @@ function LoginPage() {
             }
         }
         if (count > 0) {
+            let loginUserData = {name: userInfo[index].userName, password: userInfo[index].password};
+            sessionStorage.setItem('UserData', JSON.stringify(loginUserData));
+            let item = JSON.parse(sessionStorage.getItem('UserData'));
+            console.log('Session storage', item);
             history.push('/todoPage');
             setUserName('');
             setPassword('');
@@ -58,7 +64,7 @@ function LoginPage() {
                             <h1 className="title">Dev Band</h1><br />
                             <p>Advanced Todo List based on ReactJs with User Authentification</p>
                             <p>Want to learn ReactJs.....</p><br />
-                            <a href="https://reactjs.org/docs/getting-started.html">
+                            <a href="https://reactjs.org/docs/getting-started.html" target="_blank">
                                 <button className="tutorial">Learn React</button>
                             </a>
                             {/* <img src={welcome} /> */}

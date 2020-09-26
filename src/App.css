@@ -80,8 +80,11 @@ html, body, body > div, .App {
     width: 100%;
     color: #004e92;
 }
-.login-page .login-card .card h3{
+.login-page .login-card .card h3, .login-page .login-card .card h2{
     color: #004e92;
+}
+.login-page .login-card .card h2 {
+    display: none;
 }
 .login-page .login-card .card img{
     width: 130px;
@@ -89,6 +92,23 @@ html, body, body > div, .App {
 .login-page .login-card .card input{
     border:2px solid #004e92;
 }
+@media only screen and (max-width: 768px) {
+    .login-page .login-card .card h2 {
+      display: block;
+    }
+    .login-page .login-card .welcome {
+        display: none;
+    }
+    .login-page .login-card {
+        margin-top: 0;
+        /* margin: 20px; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 60px;
+        height: 570px;
+    }
+  }
 /* Login page closes */
 
 

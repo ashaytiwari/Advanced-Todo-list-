@@ -67,7 +67,9 @@ const LoginPage = () => {
             sessionStorage.setItem('UserData', JSON.stringify(loginUserData));
             setTimeout(() => {
                 history.push('/dashboard');
+                setIsLoading(false);
             }, 5000);
+            
             
         }
         else{
@@ -121,7 +123,13 @@ const LoginPage = () => {
                                        required/> &nbsp;
                                        <label htmlFor="rememberMe" className={classes.checkLabel}>Remember Me</label>
 
-                                    <Button variant='contained' className={classes.loginButton} type="submit" color="primary">Login</Button>
+                                    {
+                                        isLoading ? (
+                                            <Button variant="contained" disabled className={classes.loginButton}>Please Wait</Button>
+                                        ) : (
+                                            <Button variant="contained" color='primary' className={classes.loginButton} type='submit'>Login</Button>
+                                        )
+                                    }
                                 </form>
                                 {/* Login form closes */}
                             </Grid>

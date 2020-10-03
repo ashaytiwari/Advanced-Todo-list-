@@ -69,7 +69,7 @@ const styles = makeStyles((theme) => ({
     },
     loginTitle: {
         color: '#004e92',
-        fontSize: '25px',
+        fontSize: '35px',
         textAlign: 'center',
         marginBottom: '20px',
         fontFamily: 'Ubuntu'

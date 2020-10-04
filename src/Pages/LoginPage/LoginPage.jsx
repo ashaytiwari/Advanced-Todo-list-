@@ -32,16 +32,16 @@ const LoginPage = () => {
             password: 'ashay'
         },
         {
-            username: 'Kishan',
-            password: 'kishan'
+            username: 'Vivek',
+            password: 'vivek'
         },
         {
-            username: 'Radhika',
-            password: 'radhika'
+            username: 'Harshal',
+            password: 'harshal'
         },
         {
-            username: 'Baldau',
-            password: 'baldau'
+            username: 'Shruti',
+            password: 'shruti'
         },
     ]
 

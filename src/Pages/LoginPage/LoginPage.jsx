@@ -40,8 +40,8 @@ const LoginPage = () => {
             password: 'harshal'
         },
         {
-            username: 'Shruti',
-            password: 'shruti'
+            username: 'Yash',
+            password: 'yash'
         },
     ]
 

@@ -25,6 +25,8 @@ import harshal from './assets/harshal.jpg';
 import vivek from './assets/vivek.jpg';
 import yash from './assets/yash.jpg';
 import { BsHouseFill, BsClockFill } from "react-icons/bs";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 // import Clock from 'react-live-clock';
 
 
@@ -36,6 +38,28 @@ const Dashboard = () => {
     const user = JSON.parse(sessionStorage.getItem('UserData'));
     const recentDate = new Date();
     const [date, setDate] = useState(recentDate);
+    let currentDate = '';
+
+    // function to get current Date in dd/mm/yyyy format
+    let cYear, cDate, cMonth;
+    cYear = recentDate.getFullYear();
+    cMonth = (recentDate.getMonth() + 1);
+    cDate = recentDate.getDate();
+    if(cMonth < 10){
+      cMonth = '0' + cMonth;
+    }
+    if(cDate < 10){
+      cDate = '0' + cDate;
+    }
+    currentDate = cDate + '/' + cMonth + '/' + cYear;
+    console.log(currentDate);
+
+    // Calendar onChange handler
+    // calendarHandler = (date) => {
+    //     setDate(date);
+    // }
+    
+
 
     // setInterval for clock 
     useEffect(() => {
@@ -99,10 +123,16 @@ const Dashboard = () => {
                  <Grid item xs={5} sm={5} md={5} xl={5} lg={5} className={classes.time}>
                     <BsClockFill className={classes.clockIcon}/>
                     <Typography className={classes.timeString}>{date.toLocaleTimeString()}</Typography>
+                    <Typography className={classes.timeString}>{currentDate}</Typography>
                  </Grid>
-                 <Grid item xs={7} sm={7} md={7} xl={7} lg={7} className={classes.date}></Grid>
+                 <Grid item xs={7} sm={7} md={7} xl={7} lg={7} className={classes.date}>
+                    <Typography className={classes.taskTitle}>Task Update</Typography>
+                    <Typography className={classes.taskText}>5 Task Remains, 3 Task Completed</Typography>
+                 </Grid>
                </Grid>
              </Paper>
+
+             <Calendar value={date} className={classes.calendar} />
 
         </div>
     );

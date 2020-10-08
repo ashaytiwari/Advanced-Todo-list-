@@ -71,24 +71,44 @@ const styles = makeStyles((theme) => ({
         borderRadius: '0'
       },
       time: {
-        padding: '20px',
+        padding: '10px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#ffffff'
       },
       clockIcon: {
-        fontSize: '35px',
+        fontSize: '30px',
         color: '#004e92',
         marginBottom: '20px'
       },
       timeString: {
-        fontSize: '20px'
+        fontSize: '16px',
+        fontFamily: 'Ubuntu'
       },
       date: {
         backgroundColor: '#004e92',
         padding: '10px'
 
+      },
+      taskTitle: {
+        color: 'white',
+        fontSize: '20px',
+        marginBottom: '10px',
+        fontFamily: 'Ubuntu'
+      },
+      taskText: {
+        color: 'white',
+        fontSize: '16px',
+        fontFamily: 'Ubuntu'
+      },
+      calendar: {
+        width: '100%',
+        marginTop: '25px',
+        fontSize: '15px',
+        border: '0',
+        fontFamily: 'Ubuntu'
       },
 }))
 

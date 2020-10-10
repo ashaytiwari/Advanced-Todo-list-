@@ -1,7 +1,5 @@
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-
-
 const styles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -30,7 +28,8 @@ const styles = makeStyles((theme) => ({
         flexGrow: 1,
         backgroundColor: '#ffffff',
         height: '100%',
-        padding: theme.spacing(3),
+        padding: '10px'
+        // padding: theme.spacing(3),
       },
       closeMenuButton: {
         marginRight: 'auto',
@@ -109,6 +108,17 @@ const styles = makeStyles((theme) => ({
         fontSize: '15px',
         border: '0',
         fontFamily: 'Ubuntu'
+      },
+      todoForm: {
+        marginBottom: '20px'
+      },
+      input: {
+        fontSize: '18px',
+        fontFamily: 'Ubuntu'
+      },
+      iconBtn: {
+        fontSize: '25px',
+        color: '#004e92'
       },
 }))
 

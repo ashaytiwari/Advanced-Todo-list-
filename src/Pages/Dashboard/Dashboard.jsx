@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   AppBar,
   Grid,
@@ -28,45 +28,50 @@ import { FaTelegramPlane } from "react-icons/fa";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Todo from '../../Components/Todo/Todo';
+import  {DateContext, TimeContext}  from '../../App'
 // import Clock from 'react-live-clock';
 
 
 const Dashboard = () => {
   const classes = styles();
   const theme = useTheme();
+  const cDate = new Date();
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
   const user = JSON.parse(sessionStorage.getItem('UserData'));
-  const recentDate = new Date();
-  const [date, setDate] = useState(recentDate);
-  let currentDate = '';
+  const date = useContext(DateContext);
+  const time = useContext(TimeContext);
 
-  // function to get current Date in dd/mm/yyyy format
-  let cYear, cDate, cMonth;
-  cYear = recentDate.getFullYear();
-  cMonth = (recentDate.getMonth() + 1);
-  cDate = recentDate.getDate();
-  if (cMonth < 10) {
-    cMonth = '0' + cMonth;
-  }
-  if (cDate < 10) {
-    cDate = '0' + cDate;
-  }
-  currentDate = cDate + '/' + cMonth + '/' + cYear;
-  // console.log(currentDate);
+  // const recentDate = new Date();
+  // const [date, setDate] = useState(recentDate);
+  // let currentDate = '';
+
+  // // function to get current Date in dd/mm/yyyy format
+  // let cYear, cDate, cMonth;
+  // cYear = recentDate.getFullYear();
+  // cMonth = (recentDate.getMonth() + 1);
+  // cDate = recentDate.getDate();
+  // if (cMonth < 10) {
+  //   cMonth = '0' + cMonth;
+  // }
+  // if (cDate < 10) {
+  //   cDate = '0' + cDate;
+  // }
+  // currentDate = cDate + '/' + cMonth + '/' + cYear;
+  // // console.log(currentDate);
 
 
-  // setInterval for clock 
-  useEffect(() => {
-    var timerID = setInterval(() => tick(), 1000);
-    return function cleanup() {
-      clearInterval(timerID);
-    };
-  });
+  // // setInterval for clock 
+  // useEffect(() => {
+  //   var timerID = setInterval(() => tick(), 1000);
+  //   return function cleanup() {
+  //     clearInterval(timerID);
+  //   };
+  // });
 
-  function tick() {
-    setDate(new Date());
-  }
+  // function tick() {
+  //   setDate(new Date());
+  // }
 
   // Drawer handler:  open for mobile screen 
   const handleDrawerToggle = () => {
@@ -97,8 +102,9 @@ const Dashboard = () => {
   }
 
   // Drawer container starts
-  const drawer = (
-    <div>
+  const DrawerContent = () => {
+    return (
+      <div>
       <Typography className={classes.title}>DevBand</Typography>
       <Typography className={classes.greetToUser}>Welcome {user.name}!</Typography>
       {/* Profile section also shows the latest task */}
@@ -117,8 +123,8 @@ const Dashboard = () => {
         <Grid container>
           <Grid item xs={5} sm={5} md={5} xl={5} lg={5} className={classes.time}>
             <BsClockFill className={classes.clockIcon} />
-            <Typography className={classes.timeString}>{date.toLocaleTimeString()}</Typography>
-            <Typography className={classes.timeString}>{currentDate}</Typography>
+            <Typography className={classes.timeString}>{time}</Typography>
+            <Typography className={classes.timeString}>{date}</Typography>
           </Grid>
           <Grid item xs={7} sm={7} md={7} xl={7} lg={7} className={classes.date}>
             <Typography className={classes.taskTitle}>Task Update</Typography>
@@ -127,10 +133,11 @@ const Dashboard = () => {
         </Grid>
       </Paper>
 
-      <Calendar value={date} className={classes.calendar} />
+      <Calendar value={cDate} className={classes.calendar} />
 
     </div>
-  );
+    )
+  }
   // Drawer container closes
 
   // Anauthorized user can't directly access the Dasboard without login
@@ -168,7 +175,7 @@ const Dashboard = () => {
             <IconButton onClick={handleDrawerToggle} className={classes.closeMenuButton}>
               <FaTimes />
             </IconButton>
-            {drawer}
+            <DrawerContent />
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
@@ -180,7 +187,7 @@ const Dashboard = () => {
             }}
           >
             <div className={classes.toolbar} />
-            {drawer}
+            <DrawerContent />
           </Drawer>
         </Hidden>
       </nav>

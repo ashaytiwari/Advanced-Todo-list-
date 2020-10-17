@@ -23,14 +23,42 @@ import ashay from './assets/ashay.jpeg';
 import harshal from './assets/harshal.jpg';
 import vivek from './assets/vivek.jpg';
 import yash from './assets/yash.jpg';
-import { BsHouseFill, BsClockFill } from "react-icons/bs";
+import { BsHouseFill, BsClockFill, BsTrash } from "react-icons/bs";
 import { FaTelegramPlane } from "react-icons/fa";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import Todo from '../../Components/Todo/Todo';
-import  { DateContext }  from '../../App'
+
+import { DateContext } from '../../App'
 // import Clock from 'react-live-clock';
 
+const Task = ({ task, index, completeTask, deleteTask }) => {
+  const classes = styles();
+  const todaysDate = useContext(DateContext);
+  const time = new Date();
+
+  return (
+    <div className={classes.taskCard} elevation={5} onClick={() => completeTask(index)}>
+      <div>
+      <Typography className={classes.title} 
+       style={{ textDecoration: task.completed ? 'line-through' : '' }}>{task.title}</Typography>
+        {
+          task.date === todaysDate ?  
+        <Typography className={classes.taskDate}>Today {task.time}</Typography>
+            :
+          <Typography className={classes.taskDate}>{task.date} {task.time}</Typography>
+        }
+        </div>
+      <IconButton
+        aria-label="deleteTodo"
+        className={classes.deleteBtn}
+        onClick={(e) => { e.stopPropagation();
+          deleteTask(index)}}
+      >
+        <BsTrash />
+      </IconButton>
+    </div>
+  )
+}
 
 const Dashboard = () => {
   const classes = styles();
@@ -40,55 +68,24 @@ const Dashboard = () => {
   const history = useHistory();
   const user = JSON.parse(sessionStorage.getItem('UserData'));
   const todaysDate = useContext(DateContext);
-  // const time = useContext(TimeContext);
+  const [newTodo, setNewTodo] = useState('');
 
-  // const recentDate = new Date();
-  // const [date, setDate] = useState(recentDate);
-  // let currentDate = '';
+  /** 
+ * code to get current time updating every second
+   */
+  const [date, setDate] = useState(cDate);
+  // setInterval for clock 
+  useEffect(() => {
+    var timerID = setInterval(() => tick(), 1000);
+    return function cleanup() {
+      clearInterval(timerID);
+    };
+  });
+  // Ticking function for clock
+  function tick() {
+    setDate(new Date());
+  }
 
-  // // function to get current Date in dd/mm/yyyy format
-  // let cYear, cDate, cMonth;
-  // cYear = recentDate.getFullYear();
-  // cMonth = (recentDate.getMonth() + 1);
-  // cDate = recentDate.getDate();
-  // if (cMonth < 10) {
-  //   cMonth = '0' + cMonth;
-  // }
-  // if (cDate < 10) {
-  //   cDate = '0' + cDate;
-  // }
-  // currentDate = cDate + '/' + cMonth + '/' + cYear;
-  // // console.log(currentDate);
-
-
-  // // setInterval for clock 
-  // useEffect(() => {
-  //   var timerID = setInterval(() => tick(), 1000);
-  //   return function cleanup() {
-  //     clearInterval(timerID);
-  //   };
-  // });
-
-  // function tick() {
-  //   setDate(new Date());
-  // }
-
-   /** 
-  * code to get current time updating every second
-    */ 
-   const [date, setDate] = useState(cDate);
-   // setInterval for clock 
-   useEffect(() => {
-     var timerID = setInterval(() => tick(), 1000);
-     return function cleanup() {
-     clearInterval(timerID);
-     };
-   });
-   // Ticking function for clock
-   function tick() {
-     setDate(new Date());
-   }
-   // console.log(date.toLocaleTimeString(), currentDate);
 
   // Drawer handler:  open for mobile screen 
   const handleDrawerToggle = () => {
@@ -102,6 +99,8 @@ const Dashboard = () => {
       history.push('/');
     }
   }
+
+ 
 
   // Avatar image handler: username decides the avatar image
   let url;
@@ -122,40 +121,117 @@ const Dashboard = () => {
   const DrawerContent = () => {
     return (
       <div>
-      <Typography className={classes.title}>DevBand</Typography>
-      <Typography className={classes.greetToUser}>Welcome {user.name}!</Typography>
-      {/* Profile section also shows the latest task */}
-      <div className={classes.profileTab}>
-        <Avatar alt={user.name} src={url} className={classes.avatar} />
+        <Typography className={classes.title}>DevBand</Typography>
+        <Typography className={classes.greetToUser}>Welcome {user.name}!</Typography>
+        {/* Profile section also shows the latest task */}
+        <div className={classes.profileTab}>
+          <Avatar alt={user.name} src={url} className={classes.avatar} />
 
-        <Typography className={classes.profileText}>
-          Meeting with John <br />
-          Family Friend
+          <Typography className={classes.profileText}>
+            Meeting with John <br />
+            Family Friend
                 </Typography>
 
-        <BsHouseFill className={classes.profileIcon} />
+          <BsHouseFill className={classes.profileIcon} />
+        </div>
+
+        <Paper className={classes.timeAndDate} elevation={10}>
+          <Grid container>
+            <Grid item xs={5} sm={5} md={5} xl={5} lg={5} className={classes.time}>
+              <BsClockFill className={classes.clockIcon} />
+              <Typography className={classes.timeString}>{date.toLocaleTimeString()}</Typography>
+              <Typography className={classes.timeString}>{todaysDate}</Typography>
+            </Grid>
+            <Grid item xs={7} sm={7} md={7} xl={7} lg={7} className={classes.date}>
+              <Typography className={classes.taskTitle}>Task Update</Typography>
+              <Typography className={classes.taskText}>5 Task Remains, 3 Task Completed</Typography>
+            </Grid>
+          </Grid>
+        </Paper>
+
+        <Calendar value={cDate} className={classes.calendar} />
+
       </div>
-
-      <Paper className={classes.timeAndDate} elevation={10}>
-        <Grid container>
-          <Grid item xs={5} sm={5} md={5} xl={5} lg={5} className={classes.time}>
-            <BsClockFill className={classes.clockIcon} />
-            <Typography className={classes.timeString}>{date.toLocaleTimeString()}</Typography>
-            <Typography className={classes.timeString}>{todaysDate}</Typography>
-          </Grid>
-          <Grid item xs={7} sm={7} md={7} xl={7} lg={7} className={classes.date}>
-            <Typography className={classes.taskTitle}>Task Update</Typography>
-            <Typography className={classes.taskText}>5 Task Remains, 3 Task Completed</Typography>
-          </Grid>
-        </Grid>
-      </Paper>
-
-      <Calendar value={cDate} className={classes.calendar} />
-
-    </div>
     )
   }
   // Drawer container closes
+
+  // Todo container starts
+  const [taskContent, setTaskContent] = useState([
+    {
+      title: 'Chanting 16 rounds',
+      completed: true,
+      date: '15/10/2020',
+      time: '5:06 PM'
+    },
+    {
+      title: 'Meeting with John',
+      completed: false,
+      date: '15/10/2020',
+      time: '9:06 PM'
+    },
+    {
+      title: 'Meeting with Harry',
+      completed: false,
+      date: '16/10/2020',
+      time: '12:06 AM'
+    },
+    {
+      title: 'Deploying App',
+      completed: true,
+      date: '16/10/2020',
+      time: '2:30 PM'
+    },
+    {
+      title: 'Clg Assignment',
+      completed: false,
+      date: '17/10/2020',
+      time: '3:53 PM'
+    },
+  ]);
+  // Todo container closes
+
+  // function to add todo in taskContent
+   const addTask = title => {
+    const newTasks = [...taskContent, {
+      title, 
+      completed: false, 
+      time: cDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+      date: todaysDate
+    }];
+    setTaskContent(newTasks);
+  };
+
+  // function to complete the task in todo
+  const completeTask = index => {
+    const newTasks = [...taskContent];
+    newTasks[index].completed = !newTasks[index].completed;
+    setTaskContent(newTasks);
+  }
+
+  // function to delete the task in todo
+  const deleteTask = index => {
+    if (window.confirm('Do you completed that task and want to delete it ?')) {
+      const newTasks = [...taskContent];
+      console.log(index);
+      newTasks.splice(index, 1);
+      setTaskContent(newTasks);
+    }
+  }
+
+   //Todo submit handler: handle the todo submission
+   const todoSubmitHandler = (e) => {
+    e.preventDefault();
+    if (!newTodo) return;
+
+    addTask(newTodo);
+    setNewTodo('');
+    alert('Task successfully added');
+  };
+
+ 
+
+
 
   // Anauthorized user can't directly access the Dasboard without login
   if (!user) return <Redirect to='/' />
@@ -212,28 +288,42 @@ const Dashboard = () => {
 
       {/* Main content starts */}
       <div className={classes.content}>
-      <FormControl fullWidth className={classes.todoForm}>
-          <InputLabel htmlFor="standard-adornment-password" className={classes.input}>Add Task</InputLabel>
-          <Input
-            id="standard-adornment-password"
-            type='text'
-            className={classes.input}
-            // value={values.password}
-            // onChange={handleChange('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  className={classes.iconBtn}
-                >
-                  <FaTelegramPlane />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
+        <form onSubmit={todoSubmitHandler}>
+          <FormControl fullWidth className={classes.todoForm}>
+            <InputLabel htmlFor="inputTodo" className={classes.input}>Add Task</InputLabel>
+            <Input
+              id="inputTodo"
+              type='text'
+              className={classes.input}
+              value={newTodo}
+              onChange={(e) => setNewTodo(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="submitTodo"
+                    className={classes.iconBtn}
+                    type='submit'
+                  >
+                    <FaTelegramPlane />
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+        </form>
 
-        <Todo />
+        <div className={classes.tasks}>
+          {
+            taskContent.map((task, index) => (
+              <Task key={index}
+                task={task} 
+                index={index} 
+                key={index}
+                completeTask={completeTask}
+                deleteTask={deleteTask}/>
+            ))
+          }
+        </div>
 
       </div>
       {/* Main content closes */}

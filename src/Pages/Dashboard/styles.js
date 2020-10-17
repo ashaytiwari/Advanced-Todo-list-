@@ -120,6 +120,20 @@ const styles = makeStyles((theme) => ({
         fontSize: '25px',
         color: '#004e92'
       },
+      taskCard: {
+        borderRadius: '10px',
+        margin: '10px 0 10px 0',
+        padding: '15px',
+        fontFamily: 'Ubuntu',
+        cursor: 'Pointer',
+        backgroundColor: '#fffff0',
+        boxShadow: '0 2px 4px 0 #000000',
+        // fontSize: '20px',
+      },
+      deleteBtn: {
+        fontSize: '30px',
+        color: '#004e92'
+      },
 }))
 
 export default styles;

@@ -78,7 +78,7 @@ const LoginPage = () => {
     }
 
     // if user already login; directly route to dashboard
-    // if(user) return <Redirect to='/dashboard ' />
+    if(user) return <Redirect to='/dashboard ' />
 
     return (
         <Box className={classes.loginPage}>

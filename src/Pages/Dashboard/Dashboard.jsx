@@ -23,7 +23,7 @@ import ashay from './assets/ashay.jpeg';
 import harshal from './assets/harshal.jpg';
 import vivek from './assets/vivek.jpg';
 import yash from './assets/yash.jpg';
-import { BsHouseFill, BsClockFill, BsTrash } from "react-icons/bs";
+import { BsHouseFill, BsClockFill, BsTrash, BsBoxArrowInRight } from "react-icons/bs";
 import { FaTelegramPlane } from "react-icons/fa";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -39,13 +39,13 @@ const Task = ({ task, index, completeTask, deleteTask }) => {
   return (
     <div className={classes.taskCard} elevation={5} onClick={() => completeTask(index)}>
       <div>
-      <Typography className={classes.title} 
+      <Typography className={classes.taskCardTitle} 
        style={{ textDecoration: task.completed ? 'line-through' : '' }}>{task.title}</Typography>
         {
           task.date === todaysDate ?  
-        <Typography className={classes.taskDate}>Today {task.time}</Typography>
+        <Typography className={classes.taskCardDate}>Today {task.time}</Typography>
             :
-          <Typography className={classes.taskDate}>{task.date} {task.time}</Typography>
+          <Typography className={classes.taskCardDate}>{task.date} {task.time}</Typography>
         }
         </div>
       <IconButton
@@ -69,6 +69,35 @@ const Dashboard = () => {
   const user = JSON.parse(sessionStorage.getItem('UserData'));
   const todaysDate = useContext(DateContext);
   const [newTodo, setNewTodo] = useState('');
+  // Todo container starts
+  const [taskContent, setTaskContent] = useState([
+    {
+      title: 'Chanting 16 rounds',
+      completed: true,
+      date: '15/10/2020',
+      time: '5:06 PM'
+    },
+    {
+      title: 'Meeting with John',
+      completed: false,
+      date: '15/10/2020',
+      time: '9:06 PM'
+    },
+    {
+      title: 'Deploying App',
+      completed: true,
+      date: '16/10/2020',
+      time: '2:30 PM'
+    },
+    {
+      title: 'Clg Assignment',
+      completed: false,
+      date: '17/10/2020',
+      time: '3:53 PM'
+    },
+  ]);
+  // Todo container closes
+
 
   /** 
  * code to get current time updating every second
@@ -100,7 +129,8 @@ const Dashboard = () => {
     }
   }
 
- 
+ // Anauthorized user can't directly access the Dasboard without login
+ if (!user) return <Redirect to='/' />
 
   // Avatar image handler: username decides the avatar image
   let url;
@@ -117,12 +147,25 @@ const Dashboard = () => {
     url = yash;
   }
 
+  
+
   // Drawer container starts
   const DrawerContent = () => {
     return (
       <div>
-        <Typography className={classes.title}>DevBand</Typography>
+        <div className={classes.settings}>
+          <Typography className={classes.title}>DevBand</Typography>
+          <IconButton
+            aria-label="deleteTodo"
+            className={classes.logoutBtn}
+            onClick={(e) => logoutHandler()}
+          >
+            <BsBoxArrowInRight />
+          </IconButton>
+        </div>
+
         <Typography className={classes.greetToUser}>Welcome {user.name}!</Typography>
+        
         {/* Profile section also shows the latest task */}
         <div className={classes.profileTab}>
           <Avatar alt={user.name} src={url} className={classes.avatar} />
@@ -156,40 +199,6 @@ const Dashboard = () => {
   }
   // Drawer container closes
 
-  // Todo container starts
-  const [taskContent, setTaskContent] = useState([
-    {
-      title: 'Chanting 16 rounds',
-      completed: true,
-      date: '15/10/2020',
-      time: '5:06 PM'
-    },
-    {
-      title: 'Meeting with John',
-      completed: false,
-      date: '15/10/2020',
-      time: '9:06 PM'
-    },
-    {
-      title: 'Meeting with Harry',
-      completed: false,
-      date: '16/10/2020',
-      time: '12:06 AM'
-    },
-    {
-      title: 'Deploying App',
-      completed: true,
-      date: '16/10/2020',
-      time: '2:30 PM'
-    },
-    {
-      title: 'Clg Assignment',
-      completed: false,
-      date: '17/10/2020',
-      time: '3:53 PM'
-    },
-  ]);
-  // Todo container closes
 
   // function to add todo in taskContent
    const addTask = title => {
@@ -228,13 +237,6 @@ const Dashboard = () => {
     setNewTodo('');
     alert('Task successfully added');
   };
-
- 
-
-
-
-  // Anauthorized user can't directly access the Dasboard without login
-  if (!user) return <Redirect to='/' />
 
   return (
     <div className={classes.root}>
@@ -313,16 +315,24 @@ const Dashboard = () => {
         </form>
 
         <div className={classes.tasks}>
+        <Grid container>
+          <Grid item md={4} xl={6} lg={6}></Grid>
+          <Grid item xl={12} sm={12} md={8} xl={6} lg={6}>
           {
             taskContent.map((task, index) => (
-              <Task key={index}
-                task={task} 
-                index={index} 
-                key={index}
-                completeTask={completeTask}
-                deleteTask={deleteTask}/>
+                // <Grid item xs={12} sm={12} md={6} xl={6} lg={6} className={classes.todoCard} key={index}>
+                  <Task  key={index}
+                    task={task}
+                    index={index}
+                    completeTask={completeTask}
+                    deleteTask={deleteTask} />
+                // </Grid> 
             ))
           }
+          </Grid>
+          {/* <Grid item md={2} xl={3} lg={3}></Grid> */}
+          </Grid>
+
         </div>
 
       </div>

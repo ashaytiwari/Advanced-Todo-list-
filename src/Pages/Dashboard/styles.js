@@ -1,4 +1,6 @@
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import background from './assets/background.jpg';
+
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -28,7 +30,12 @@ const styles = makeStyles((theme) => ({
         flexGrow: 1,
         backgroundColor: '#ffffff',
         height: '100%',
-        padding: '10px'
+        padding: '10px',
+        backgroundImage: `url( ${background} )`,
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        height: '100%'
         // padding: theme.spacing(3),
       },
       closeMenuButton: {
@@ -113,27 +120,66 @@ const styles = makeStyles((theme) => ({
         marginBottom: '20px'
       },
       input: {
-        fontSize: '18px',
-        fontFamily: 'Ubuntu'
+        fontSize: '20px',
+        fontFamily: 'Ubuntu',
+        color: '#ffffff'
       },
       iconBtn: {
         fontSize: '25px',
-        color: '#004e92'
+        color: '#ffffff'
       },
       taskCard: {
         borderRadius: '10px',
-        margin: '10px 0 10px 0',
+        margin: '20px 0 20px 0',
         padding: '15px',
         fontFamily: 'Ubuntu',
         cursor: 'Pointer',
         backgroundColor: '#fffff0',
         boxShadow: '0 2px 4px 0 #000000',
+        display: 'flex',
+        // alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row'
         // fontSize: '20px',
       },
       deleteBtn: {
-        fontSize: '30px',
-        color: '#004e92'
+        fontSize: '50px',
+        color: '#004e92',
+        float: 'right'
       },
+      logoutBtn: {
+        fontSize: '30px',
+        color: '#004e92',
+        float: 'right',
+        
+      },
+      settings: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        
+      },
+      tasks: {
+        padding: '30px'
+      },
+      taskCardTitle: {
+        fontSize: '20px',
+        fontFamily: 'Ubuntu',
+        margin: '10px 0',
+      },
+      taskCardDate: {
+        fontSize: '13px',
+        fontFamily: 'Ubuntu',
+        // color: '#004e92'
+      },
+      // input: {
+      //   backgroundColor: '#ffffff'
+      // },
+      // todoCard: {
+      //   margin: '5px',
+      //   minHeight: '200px'
+      // },
 }))
 
 export default styles;

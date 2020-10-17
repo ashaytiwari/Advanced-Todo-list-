@@ -28,7 +28,7 @@ import { FaTelegramPlane } from "react-icons/fa";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Todo from '../../Components/Todo/Todo';
-import  {DateContext, TimeContext}  from '../../App'
+import  { DateContext }  from '../../App'
 // import Clock from 'react-live-clock';
 
 
@@ -39,8 +39,8 @@ const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
   const user = JSON.parse(sessionStorage.getItem('UserData'));
-  const date = useContext(DateContext);
-  const time = useContext(TimeContext);
+  const todaysDate = useContext(DateContext);
+  // const time = useContext(TimeContext);
 
   // const recentDate = new Date();
   // const [date, setDate] = useState(recentDate);
@@ -72,6 +72,23 @@ const Dashboard = () => {
   // function tick() {
   //   setDate(new Date());
   // }
+
+   /** 
+  * code to get current time updating every second
+    */ 
+   const [date, setDate] = useState(cDate);
+   // setInterval for clock 
+   useEffect(() => {
+     var timerID = setInterval(() => tick(), 1000);
+     return function cleanup() {
+     clearInterval(timerID);
+     };
+   });
+   // Ticking function for clock
+   function tick() {
+     setDate(new Date());
+   }
+   // console.log(date.toLocaleTimeString(), currentDate);
 
   // Drawer handler:  open for mobile screen 
   const handleDrawerToggle = () => {
@@ -123,8 +140,8 @@ const Dashboard = () => {
         <Grid container>
           <Grid item xs={5} sm={5} md={5} xl={5} lg={5} className={classes.time}>
             <BsClockFill className={classes.clockIcon} />
-            <Typography className={classes.timeString}>{time}</Typography>
-            <Typography className={classes.timeString}>{date}</Typography>
+            <Typography className={classes.timeString}>{date.toLocaleTimeString()}</Typography>
+            <Typography className={classes.timeString}>{todaysDate}</Typography>
           </Grid>
           <Grid item xs={7} sm={7} md={7} xl={7} lg={7} className={classes.date}>
             <Typography className={classes.taskTitle}>Task Update</Typography>

@@ -6,7 +6,7 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 
 // Creating date and time context for getting current date and time which will be used in other parts of the app
 export const DateContext = React.createContext();
-export const TimeContext = React.createContext();
+// export const TimeContext = React.createContext();
 
 /** 
  * code to get current Date in dd/mm/yyyy format
@@ -26,32 +26,15 @@ if (cDate < 10) {
 currentDate = cDate + '/' + cMonth + '/' + cYear;
 
 function App() {
-  /** 
-  * code to get current time updating every second
-    */ 
-  const [date, setDate] = useState(recentDate);
-  // setInterval for clock 
-  useEffect(() => {
-    var timerID = setInterval(() => tick(), 1000);
-    return function cleanup() {
-    clearInterval(timerID);
-    };
-  });
-  // Ticking function for clock
-  function tick() {
-    setDate(new Date());
-  }
-  // console.log(date.toLocaleTimeString(), currentDate);
+ 
   
   return (
     <div className="App">
       <Router>
         <Switch>
           <DateContext.Provider value={currentDate}>
-            <TimeContext.Provider value={date.toLocaleTimeString()}>
               <Route path='/' exact component={() => <LoginPage />} />
               <Route path='/dashboard' component={() => <Dashboard />} />
-            </TimeContext.Provider>
           </DateContext.Provider>
         </Switch>
       </Router>

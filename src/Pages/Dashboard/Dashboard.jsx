@@ -241,15 +241,6 @@ const Dashboard = () => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <IconButton
-        color="inherit"
-        aria-label="Open drawer"
-        edge="start"
-        onClick={handleDrawerToggle}
-        className={classes.menuButton}
-      >
-        <FaStream />
-      </IconButton>
 
       {/* Drawer starts */}
       <nav className={classes.drawer}>
@@ -290,6 +281,15 @@ const Dashboard = () => {
 
       {/* Main content starts */}
       <div className={classes.content}>
+      <IconButton
+        color="inherit"
+        aria-label="Open drawer"
+        edge="start"
+        onClick={handleDrawerToggle}
+        className={classes.menuButton}
+      >
+        <FaStream />
+      </IconButton>
         <form onSubmit={todoSubmitHandler}>
           <FormControl fullWidth className={classes.todoForm}>
             <InputLabel htmlFor="inputTodo" className={classes.input}>Add Task</InputLabel>

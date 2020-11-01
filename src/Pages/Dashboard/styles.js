@@ -8,6 +8,7 @@ const styles = makeStyles((theme) => ({
       },
       drawer: {
         backgroundColor: '#fffff0',
+        width: '320px',
         [theme.breakpoints.up('sm')]: {
           width: '450px',
           flexShrink: 0,
@@ -15,11 +16,12 @@ const styles = makeStyles((theme) => ({
       },
       
       menuButton: {
-        marginRight: theme.spacing(2),
+        // marginRight: theme.spacing(2),
         zIndex: theme.zIndex.drawer + 1,
         [theme.breakpoints.up('sm')]: {
           display: 'none',
         },
+        color: "#004e92"
       },
       drawerPaper: {
         backgroundColor: '#fffff0',
